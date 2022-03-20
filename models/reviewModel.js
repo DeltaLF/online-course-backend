@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
 const ReviewSchema = new mongoose.Schema({
-  comment: {
+  content: {
     type: String,
     requrie: true,
   },
-  rate: {
+  rating: {
     type: Number,
     enum: [1, 2, 3, 4, 5],
     required: true,
@@ -15,9 +15,13 @@ const ReviewSchema = new mongoose.Schema({
     default: Date.now,
   },
   reviewer: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    type: String,
+    require: true,
   },
+  // reviewer: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: "User",
+  // },
 });
 
 module.exports = mongoose.model("Review", ReviewSchema);

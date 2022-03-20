@@ -1,19 +1,28 @@
 const { CourseModel } = require("../models");
 const jwt = require("jsonwebtoken");
 module.exports.fetchCourse = async (req, res) => {
+  // only fetch single course needs to populate reviews
   const { courseId } = req.params;
-  const course = await CourseModel.find({ _id: courseId }).populate(
-    "instructor",
-    "username"
-  );
-  if (!course || course.length === 0) {
+
+  const course = await CourseModel.findOne({ _id: courseId })
+    .populate("reviews")
+    .populate("instructor", "username");
+
+  if (!course) {
     // not suppose to find nothing
     return res
       .status(404)
       .send({ success: false, message: "course not found" });
   }
-  console.log(typeof course, course);
-  res.status(200).send({ course: course[0] });
+  console.log(
+    typeof course,
+    course,
+    "reviews:",
+    typeof course.reviews,
+    course.reviews
+  );
+
+  res.status(200).send({ course });
 };
 
 module.exports.fetchCourses = async (req, res) => {
