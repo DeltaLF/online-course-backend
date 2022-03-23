@@ -5,8 +5,6 @@ const catchAsync = require("./../utils/catchAsync");
 const { isLoggedIn } = require("../middleware");
 
 router.get("/testapi", isLoggedIn, (req, res) => {
-  console.log("receive request");
-  console.log(req.headers);
   const msgObj = {
     message: "api work",
   };

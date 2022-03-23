@@ -14,13 +14,6 @@ module.exports.fetchCourse = async (req, res) => {
       .status(404)
       .send({ success: false, message: "course not found" });
   }
-  console.log(
-    typeof course,
-    course,
-    "reviews:",
-    typeof course.reviews,
-    course.reviews
-  );
 
   res.status(200).send({ course });
 };

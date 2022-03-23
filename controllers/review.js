@@ -21,10 +21,6 @@ module.exports.createReview = async (req, res) => {
     reviewer: decoded.username,
   });
   course.reviews.push(newReview._id);
-  console.log(newReview._id);
-  console.log(newReview);
-  console.log(course);
-  return;
   await course.save();
   newReview
     .save()
