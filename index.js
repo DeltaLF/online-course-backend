@@ -26,7 +26,7 @@ app.use("/user", authRoute);
 app.use("/course", courseRoute);
 app.use("/review", reviewRoute);
 
-const port = 9000;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`server is running on port:${port}`);
 });
