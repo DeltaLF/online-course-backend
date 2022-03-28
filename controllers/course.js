@@ -28,10 +28,9 @@ module.exports.fetchCourses = async (req, res) => {
       ? { students: { $in: [userId] } }
       : {};
 
-  const courses = await CourseModel.find(queryInput).populate(
-    "instructor",
-    "username"
-  );
+  const courses = await CourseModel.find(queryInput)
+    .populate("instructor", "username")
+    .populate("reviews", "rating");
   if (!keyWord) {
     return res.status(200).send({ courses });
   }
