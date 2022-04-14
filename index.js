@@ -2,9 +2,9 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 const express = require("express");
-const path = require("path");
 const mongoose = require("mongoose");
 const db_url = process.env.DB_URL;
+const corsOptions = require("./config/cors_config");
 const cors = require("cors");
 
 const authRoute = require("./routes/auth");
@@ -21,7 +21,8 @@ db.once("open", () => {
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+
+app.use(cors(corsOptions));
 app.use("/user", authRoute);
 app.use("/course", courseRoute);
 app.use("/review", reviewRoute);

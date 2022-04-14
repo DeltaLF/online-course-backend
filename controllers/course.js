@@ -1,9 +1,14 @@
 const { CourseModel } = require("../models");
 const jwt = require("jsonwebtoken");
+let ObjectId = require("mongoose").Types.ObjectId;
 module.exports.fetchCourse = async (req, res) => {
   // only fetch single course needs to populate reviews
   const { courseId } = req.params;
-
+  if (!ObjectId.isValid(courseId)) {
+    return res
+      .status(404)
+      .send({ success: false, message: "Invalid course id" });
+  }
   const course = await CourseModel.findOne({ _id: courseId })
     .populate("reviews")
     .populate("instructor", "username");
@@ -27,7 +32,6 @@ module.exports.fetchCourses = async (req, res) => {
       : filterType === "student"
       ? { students: { $in: [userId] } }
       : {};
-
   const courses = await CourseModel.find(queryInput)
     .populate("instructor", "username")
     .populate("reviews", "rating");
